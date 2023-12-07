@@ -1,12 +1,11 @@
-package controller;
+package controller.temperaturas;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import entities.Temperaturas;
+import entities.temperaturas.Temperaturas;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -40,7 +39,7 @@ public class TemperaturasController {
 
     // @GET
     // @Path("{name}")
-    // public String name(String name ){
+    // public String name(@PathParam("name") String name ){
     //     if (name.isEmpty()){
     //        return "No hay sms";
     //     }

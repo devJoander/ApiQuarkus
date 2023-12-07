@@ -1,4 +1,4 @@
-package entities;
+package entities.temperaturas;
 
 
 public class Temperaturas {

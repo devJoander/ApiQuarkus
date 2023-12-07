@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import entities.Temperaturas;
+import entities.temperaturas.Temperaturas;
 import interfacee.ITemperaturasService;
 import jakarta.enterprise.context.ApplicationScoped;
 

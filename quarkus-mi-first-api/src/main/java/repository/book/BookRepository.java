@@ -1,6 +1,6 @@
-package repository;
+package repository.book;
 
-import entities.Book;
+import entities.book.Book;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

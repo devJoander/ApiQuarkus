@@ -3,7 +3,8 @@ package interfacee;
 import java.util.List;
 import java.util.Optional;
 
-import entities.Temperaturas;
+import entities.temperaturas.Temperaturas;
+
 
 public interface  ITemperaturasService {
 
