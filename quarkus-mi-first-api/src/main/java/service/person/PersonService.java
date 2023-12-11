@@ -2,6 +2,7 @@ package service.person;
 
 import java.util.List;
 import entities.person.Person;
+import exception.Mensaje;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,13 +14,13 @@ public class PersonService {
 
     @Inject
     PersonRepository personRepository;
-
+    Mensaje mensaje = new Mensaje();
     public List<Person> getAll() {
         try {
             List<Person> persons = personRepository.listAll();
 
             if (persons.isEmpty()) {
-                throw new IllegalArgumentException("Lista de personas vacía");
+                return null;
             }
 
             return persons;
@@ -33,13 +34,18 @@ public class PersonService {
     public Person create(Person person) {
         try {
             if (person == null) {
-                throw new IllegalArgumentException("Ingresa un objeto");
+                mensaje = new Mensaje("Ingresa un objeto", mensaje.getCausa().toString());
+
+                throw new IllegalArgumentException(mensaje.getCausa());
             } else if (person.getName().isEmpty()) {
-                throw new IllegalArgumentException("El nombre no puede ser vacío");
+                mensaje = new Mensaje("El name no puede ser vacío", mensaje.getCausa().toString());
+                throw new IllegalArgumentException(mensaje.getCausa());
             } else if (person.getLastName().isEmpty()) {
-                throw new IllegalArgumentException("El apellido no puede ser vacío");
+                mensaje = new Mensaje("El last_name no puede ser vacío",mensaje.getCausa().toString());
+                throw new IllegalArgumentException(mensaje);
             } else if (person.getAge() <= 0) {
-                throw new IllegalArgumentException("La edad no puede ser vacío");
+                mensaje = new Mensaje("The age can´t be empty", mensaje.getCausa().toString());
+                throw new IllegalArgumentException(mensaje);
             }
             person.setStatus("A");
             personRepository.persist(person);
@@ -88,9 +94,9 @@ public class PersonService {
              
             Person existingPerson = personRepository.findById(id);
             if (existingPerson == null) {
-                throw new IllegalArgumentException("No se encontró ninguna persona con el ID proporcionado: " + id);
+               
             }
-            existingPerson.setStatus("A");
+            existingPerson.setStatus("I");
             personRepository.persist(existingPerson);
 
          } catch (RuntimeException ex) {
@@ -105,7 +111,7 @@ public class PersonService {
              
             Person existingPerson = personRepository.findById(id);
             if (existingPerson == null) {
-                throw new IllegalArgumentException("No se encontró ninguna persona con el ID proporcionado: " + id);
+                return null;
             }
             return existingPerson;
 

@@ -1,6 +1,6 @@
 quarkus:
   datasource:
-    db-kind: postgresql
+    db-kind: postgresql 
     username: postgres
     password: admin
     jdbc:
@@ -10,3 +10,4 @@ quarkus:
       generation: drop-and-create
   http:
     port: 8090
+# Swagger: http://localhost:8090/q/swagger-ui/

@@ -5,6 +5,7 @@ import entities.person.Person;
 import exception.CustomException;
 import exception.Mensaje;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -24,7 +25,7 @@ public class PersonController {
     public Response getAll() {
         try {
             List<Person> persons = personService.getAll();
-            if (persons.isEmpty()) {
+            if (persons == null) {
                 Mensaje mensaje = new Mensaje("Lista de libros vacía ", null);
                 return Response.status(Response.Status.OK).entity(mensaje).build();
             }
@@ -41,7 +42,7 @@ public class PersonController {
     }
 
     @POST
-    public Response insertPerson(Person person) {
+    public Response insertPerson(@Valid Person person) {
         try {
             personService.create(person);
             return Response.status(Response.Status.OK).entity(person).build();
@@ -59,7 +60,7 @@ public class PersonController {
 
     @Path("{id}")
     @PUT()
-    public Response update(Long id, Person person) {
+    public Response update(@Valid Long id, Person person) {
         try {
             personService.update(id, person);
             return Response.status(Response.Status.OK).entity(person).build();
@@ -79,10 +80,14 @@ public class PersonController {
     @DELETE()
     public Response delete(Long id) {
         try {
+            Person existingPerson = personService.getById(id);
+            if(existingPerson == null){
+                Mensaje mensaje = new Mensaje("No existe una persona con el id: " + id, null);
+                return Response.status(Response.Status.OK).entity(mensaje).build();
+            }
             personService.delete(id);
             Mensaje mensaje = new Mensaje("Persona eliminada exitosamente", null);
             return Response.status(Response.Status.OK).entity(mensaje).build();
-
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))
@@ -99,7 +104,11 @@ public class PersonController {
     public Response getById(Long id) {
         try {
             Person existingPerson = personService.getById(id);
-             return Response.status(Response.Status.OK).entity(existingPerson).build();
+            if(existingPerson == null){
+                Mensaje mensaje = new Mensaje("No existe una persona con el id: " + id, null);
+                return Response.status(Response.Status.OK).entity(mensaje).build();
+            }
+            return Response.status(Response.Status.OK).entity(existingPerson).build();
 
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)

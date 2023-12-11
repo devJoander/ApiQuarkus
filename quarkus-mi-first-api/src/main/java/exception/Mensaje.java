@@ -1,6 +1,6 @@
 package exception;
 
-public class Mensaje {
+public class Mensaje extends RuntimeException{
 
     public String mensaje;
     public String causa;
