@@ -7,4 +7,6 @@ quarkus:
       url: jdbc:postgresql://localhost:5432/QuarkusBook
   hibernate-orm:
     database:
-      generation: update
+      generation: drop-and-create
+  http:
+    port: 8090
