@@ -2,7 +2,6 @@ package controller.person;
 
 import java.util.List;
 import entities.person.Person;
-import exception.CustomException;
 import exception.Mensaje;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -25,11 +24,7 @@ public class PersonController {
     public Response getAll() {
         try {
             List<Person> persons = personService.getAll();
-            if (persons == null) {
-                Mensaje mensaje = new Mensaje("Lista de libros vacía ", null);
-                return Response.status(Response.Status.OK).entity(mensaje).build();
-            }
-            return Response.ok(persons).build();
+            return Response.ok(persons).entity(new Mensaje("Error interno del servidor:" , "")).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))
@@ -46,7 +41,6 @@ public class PersonController {
         try {
             personService.create(person);
             return Response.status(Response.Status.OK).entity(person).build();
-
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))
@@ -64,7 +58,6 @@ public class PersonController {
         try {
             personService.update(id, person);
             return Response.status(Response.Status.OK).entity(person).build();
-
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))
@@ -80,14 +73,8 @@ public class PersonController {
     @DELETE()
     public Response delete(Long id) {
         try {
-            Person existingPerson = personService.getById(id);
-            if(existingPerson == null){
-                Mensaje mensaje = new Mensaje("No existe una persona con el id: " + id, null);
-                return Response.status(Response.Status.OK).entity(mensaje).build();
-            }
             personService.delete(id);
-            Mensaje mensaje = new Mensaje("Persona eliminada exitosamente", null);
-            return Response.status(Response.Status.OK).entity(mensaje).build();
+            return Response.status(Response.Status.OK).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))
@@ -103,13 +90,7 @@ public class PersonController {
     @GET()
     public Response getById(Long id) {
         try {
-            Person existingPerson = personService.getById(id);
-            if(existingPerson == null){
-                Mensaje mensaje = new Mensaje("No existe una persona con el id: " + id, null);
-                return Response.status(Response.Status.OK).entity(mensaje).build();
-            }
-            return Response.status(Response.Status.OK).entity(existingPerson).build();
-
+            return Response.status(Response.Status.OK).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new Mensaje(e.getMessage(), e.getCause().toString()))

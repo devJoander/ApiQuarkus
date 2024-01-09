@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+@Data // Genera automáticamente métodos toString, equals, hashCode,
 @Entity
 @Getter
 @Setter

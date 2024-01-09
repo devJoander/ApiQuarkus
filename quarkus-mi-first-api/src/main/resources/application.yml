@@ -10,4 +10,8 @@ quarkus:
       generation: drop-and-create
   http:
     port: 8090
+    debug: true
+  debug:
+    port: 5005
+
 # Swagger: http://localhost:8090/q/swagger-ui/
